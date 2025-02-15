@@ -50,7 +50,8 @@
     "test": {
       "options": {
         "passWithNoTests": true
-      }
+      },
+      "dependsOn": ["generate-types", "migrate-prisma"]
     }
   }
 }
