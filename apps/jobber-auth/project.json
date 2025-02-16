@@ -11,7 +11,7 @@
         "command": "webpack-cli build",
         "args": ["node-env=production"]
       },
-      "dependsOn": ["generate-types"],
+      "dependsOn": ["generate-prisma", "generate-ts-proto"],
       "configurations": {
         "development": {
           "args": ["node-env=development"]
@@ -35,23 +35,28 @@
         }
       }
     },
-    "generate-types": {
+    "generate-prisma": {
       "command": "prisma generate",
       "options": {
-        "cwd": "apps/jobber-auth"
-      }
+        "cwd": "{projectRoot}",
+        "input": ["prisma/schema.prisma"]
+      },
+      "cache": true
     },
     "migrate-prisma": {
       "command": "prisma migrate dev",
       "options": {
-        "cwd": "apps/jobber-auth"
+        "cwd": "{projectRoot}"
       }
+    },
+    "generate-ts-proto": {
+      "command": "nx generate-ts-proto"
     },
     "test": {
       "options": {
         "passWithNoTests": true
       },
-      "dependsOn": ["generate-types", "migrate-prisma"]
+      "dependsOn": ["generate-prisma", "migrate-prisma"]
     }
   }
 }
